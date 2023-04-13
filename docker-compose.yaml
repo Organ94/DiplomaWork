@@ -1,0 +1,33 @@
+version: '1.0'
+
+services:
+
+  server:
+    image: backend
+    container_name: 'cloud-storage-server'
+    build: ./
+    ports:
+      - "5050:5050"
+    depends_on:
+      - database
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://database:3306/diploma_work_cloud_storage
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 412112Alex1994
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_LIQUIBASE_URL: jdbc:mysql://database:3306/diploma_work_cloud_storage
+      SPRING_LIQUIBASE_USER: root
+      SPRING_LIQUIBASE_PASSWORD: 412112Alex1994
+
+  database:
+    image: mysql
+    container_name: 'cloud-storage-db'
+    volumes:
+      - /mysql_data:/var/lib/mysql
+    environment:
+      MYSQL_USERNAME: root
+      MYSQL_PASSWORD: 412112Alex1994
+      MYSQL_ROOT_PASSWORD: 412112Alex1994
+      MYSQL_DATABASE: diploma_work_cloud_storage
+    ports:
+      - "3306:3306"
